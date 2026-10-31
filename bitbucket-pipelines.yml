@@ -1,0 +1,14 @@
+# Optional validation pipeline. Bitbucket's workspace.bitbucket.io static hosting
+# serves repository files; Pipelines does not deploy external infrastructure.
+image: node:22-alpine
+pipelines:
+  default:
+    - step:
+        name: Validate static portfolio
+        script:
+          - node --check assets/app.js
+          - node --check assets/config.js
+          - test -f index.html
+          - test -f assets/styles.css
+          - test -f assets/favicon.svg
+          - echo "Static files validated"
